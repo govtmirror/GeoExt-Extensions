@@ -9,9 +9,26 @@
     <modules>
         <module>geoext</module>
         <!-- put extensions / modifications here -->
-    <module>geoext-wps-ux</module>
-  </modules>
+        <module>geoext-wps-ux</module>
+    </modules>
 
     <name>GeoExt Parent</name>
     <url>http://geoext.org</url>
+        
+    <distributionManagement>
+        <repository>
+            <id>cida-releases</id>
+            <name>CIDA Releases</name>
+            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>cida-snapshots</id>
+            <name>CIDA Snapshots</name>
+            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/js_lib/maven/geoext-parent/trunk</connection>
+        <developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/js_lib/maven/geoext-parent/trunk</developerConnection>
+    </scm>
 </project>
