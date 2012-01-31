@@ -4,7 +4,7 @@
   <parent>
     <artifactId>geoext-parent</artifactId>
     <groupId>gov.usgs.cida.jslibs</groupId>
-    <version>1.1-2-SNAPSHOT</version>
+    <version>1.1-2</version>
   </parent>
 
   <groupId>gov.usgs.cida.jslibs</groupId>
