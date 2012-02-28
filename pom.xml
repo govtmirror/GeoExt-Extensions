@@ -11,6 +11,7 @@
         <!-- put extensions / modifications here -->
         <module>geoext-wps-ux</module>
         <module>geoext-sos-ux</module>
+        <module>geoext-csw-ux</module>
     </modules>
 
     <name>GeoExt Parent</name>
