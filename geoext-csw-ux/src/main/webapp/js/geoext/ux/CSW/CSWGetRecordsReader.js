@@ -1,31 +1,46 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.CSWGetRecordsReader = function(meta, recordType) {
+CIDA.CSWGetRecordsReader = function(meta, recordType) {
+            
     meta = meta || {};
     if(!meta.format) {
         meta.format = new OpenLayers.Format.CSWGetRecords();
     }
     if(typeof recordType !== "function") {
         recordType = Ext.data.Record.create(meta.fields || [
-            {name: "identifier", type: "string"},
-            {name: "derivatives"}, // Array of objects
-            {name: "scenarios"}, // Array of objects
-            {name: "gcms"}, // Array of objects
-            {name: "opendap", type: "string"},
-            {name: "wms", type: "string"},
-            {name: "sos", type: "string"},
-            {name: "fieldLabels"},
-            {name: "helptext"} 
+            {name: "characterSet", defaultValue: []},
+            {name: "dataQualityInfo", defaultValue: []},
+            {name: "dateStamp", type: "date", useNull: true},
+            {name: "distributionInfo", defaultValue: {}},
+            {name: "identificationInfo", defaultValue: []},
+            {name: "fileIdentifier",  type: "string", useNull: true},
+            {name: "language",  type: "string", useNull: true},
+            {name: "metadataStandardName",  type: "string", useNull: true},
+            {name: "metadataStandardVersion",  type: "string", useNull: true},
+            {name: "referenceSystemInfo", defaultValue: []},
+            {name: "type", type: "string", useNull: true}
         ]
         );
     }
-    GDP.CSWGetRecordsReader.superclass.constructor.call(
+    CIDA.CSWGetRecordsReader.superclass.constructor.call(
         this, meta, recordType
-    );
+        );
 };
 
-Ext.extend(GDP.CSWGetRecordsReader, Ext.data.DataReader, {
-
+Ext.extend(CIDA.CSWGetRecordsReader, Ext.data.DataReader, {
+    /**
+    * Takes an element, checks the array for that element
+    * and if found, returns the index of that element. 
+    * Otherwise, returns -1
+    */
+    arrayContains : function(array, element) {
+        for (var i = 0;i < array.length;i++) {
+            if (array[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    },
 
     /** api: config[attributionCls]
      *  ``String`` CSS class name for the attribution DOM elements.
@@ -33,7 +48,7 @@ Ext.extend(GDP.CSWGetRecordsReader, Ext.data.DataReader, {
      *  appropriate.  Default is "gx-attribution".
      */
     attributionCls: "gx-attribution",
-
+            
     /** private: method[read]
      *  :param request: ``Object`` The XHR object which contains the parsed XML
      *      document.
@@ -69,95 +84,31 @@ Ext.extend(GDP.CSWGetRecordsReader, Ext.data.DataReader, {
 
         Ext.iterate(data.records, function (item) {
             var values = {};
-            values.identifier = item.fileIdentifier.CharacterString.value;
-            values.derivatives = [];
-            values.scenarios = [];
-            values.gcms = [];
             
-            var idInfos = item.identificationInfo;
-            
-            Ext.iterate(idInfos, function (idInfo) {
-                var keywordTypes = idInfo.descriptiveKeywords;
-                var srvId = idInfo.serviceIdentification;
-                var abstrakt;
-                try {
-                    abstrakt = Ext.decode(idInfo["abstract"].CharacterString.value, true);
-                }
-                catch (ex) {
-                    // means not json, set abstract to null
-                    abstrakt = null;
-                }
-                
-                if (keywordTypes) {
-                    Ext.iterate(keywordTypes, function (kt) {
-                        if (kt.type.codeListValue === "derivative") {
-                            Ext.iterate(kt.keyword, function(key) {
-                                var derivArr = [];
-                                var val = key.CharacterString.value;
-                                derivArr.push(val);
-                                if (abstrakt != null) {
-                                    derivArr.push(abstrakt.quicktips.derivatives[val]);
-                                }
-                                values.derivatives.push(derivArr);
-                            }, this);
-                        }
-                        else if (kt.type.codeListValue === "scenario") {
-                            Ext.iterate(kt.keyword, function(key) {
-                                var scenarioArr = [];
-                                var val = key.CharacterString.value;
-                                scenarioArr.push(val);
-                                if (abstrakt != null) {
-                                    scenarioArr.push(abstrakt.quicktips.scenarios[val]);
-                                }
-                                values.scenarios.push(scenarioArr);
-                            }, this);
-                        }
-                        else if (kt.type.codeListValue === "gcm") {
-                            Ext.iterate(kt.keyword, function(key) {
-                                var gcmArr = [];
-                                var val = key.CharacterString.value;
-                                gcmArr.push(val);
-                                if (abstrakt != null) {
-                                    gcmArr.push(abstrakt.quicktips.gcms[val]);
-                                }
-                                values.gcms.push(gcmArr);
-                            }, this);
-                        }
-                    }, this);
-                }
-                if (srvId) {
-                    var serviceId = srvId.id;
-                    var opMeta = srvId.operationMetadata;
-                    if (opMeta) var linkage = opMeta.linkage;
-                    if (linkage) var endpoint = linkage.URL;
-                    if (serviceId) {
-                        if (serviceId === "OPeNDAP") {
-                            values.opendap = endpoint;
-                        }
-                        else if (serviceId === "OGC-WMS") {
-                            values.wms = endpoint;
-                        }
-                        else if (serviceId === "OGC-SOS") {
-                            values.sos = endpoint;
-                        }
-                    } 
-                }
-                if (abstrakt != null) {
-                    values.fieldLabels = abstrakt.fieldlabels;
-                    values.helptext = abstrakt.helptext;
-                }
-                
-            }, this);
+            values.characterSet = null; 
+            values.dataQualityInfo = null; 
+            values.dateStamp = null; 
+            values.distributionInfo = item.distributionInfo || null; 
+            values.identificationInfo = null; 
+            values.fileIdentifier = null; 
+            values.language = null; 
+            values.metadataStandardName = null; 
+            values.metadataStandardVersion = null; 
+            values.referenceSystemInfo = null; 
+            values.type = item.type || null; 
+
+            if (item.characterSet && item.characterSet.length > 0) values.characterSet = item.characterSet;
+            if (item.dataQualityInfo && item.dataQualityInfo.length > 0) values.dataQualityInfo = item.dataQualityInfo;
+            if (item.dateStamp) values.dateStamp = item.dateStamp.DateTime.value;
+            if (item.fileIdentifier) values.fileIdentifier = item.fileIdentifier.CharacterString.value;
+            if (item.identificationInfo && item.identificationInfo.length > 0) values.identificationInfo = item.identificationInfo;
+            if (item.language) values.language = item.language.CharacterString.value;
+            if (item.metadataStandardName) values.metadataStandardName = item.metadataStandardName.CharacterString.value;
+            if (item.metadataStandardVersion) values.metadataStandardVersion = item.metadataStandardVersion.CharacterString.value;
+            if (item.referenceSystemInfo && item.referenceSystemInfo.length > 0) values.referenceSystemInfo = item.referenceSystemInfo;
             
             records.push(new this.recordType(values));
         }, this);
-//        values.identifier = data.records[0].fileIdentifier...;
-//        values.languages = data.languages;
-//        values.operationsMetadata = data.operationsMetadata;
-//        values.processOfferings = data.processOfferings;
-//        values.serviceIdentification = data.serviceIdentification;
-//        values.serviceProvider = data.serviceProvider;
-        //records.push(new this.recordType(values));
         
         return {
             totalRecords: records.length,
