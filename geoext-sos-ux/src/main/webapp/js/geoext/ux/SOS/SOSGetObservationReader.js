@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.SOSGetObservationReader = function(meta, recordType) {
+CIDA.SOSGetObservationReader = function(meta, recordType) {
     meta = meta || {};
     if(!meta.format) {
         meta.format = new OpenLayers.Format.SOSGetObservation();
@@ -21,7 +21,7 @@ GDP.SOSGetObservationReader = function(meta, recordType) {
     );
 };
 
-Ext.extend(GDP.SOSGetObservationReader, Ext.data.DataReader, {
+Ext.extend(CIDA.SOSGetObservationReader, Ext.data.DataReader, {
 
 
     /** api: config[attributionCls]

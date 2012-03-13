@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.SOSGetObservationStore = function(meta) {
+CIDA.SOSGetObservationStore = function(meta) {
     meta = meta || {};
     
     meta.format = new OpenLayers.Format.SOSGetObservation();
@@ -13,14 +13,14 @@ GDP.SOSGetObservationStore = function(meta) {
             {name: "dataRecord"}, // Array of objects
             {name: "values"} // Array of objects
     ]
-    GDP.SOSGetObservationStore.superclass.constructor.call(
+    CIDA.SOSGetObservationStore.superclass.constructor.call(
         this,
         Ext.apply(meta, {
             proxy: meta.proxy || (!meta.data ? new Ext.data.HttpProxy({url: meta.url, disableCaching: false, method: "POST"}) : undefined),
             baseParams : meta.baseParams || { xmlData : meta.format.write(meta.opts) },
-            reader: new GDP.SOSGetObservationReader(meta)
+            reader: new CIDA.SOSGetObservationReader(meta)
         })
     );
 };
 
-Ext.extend(GDP.SOSGetObservationStore, Ext.data.Store);
+Ext.extend(CIDA.SOSGetObservationStore, Ext.data.Store);
