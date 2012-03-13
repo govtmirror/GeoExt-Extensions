@@ -16,7 +16,7 @@ CIDA.SOSGetObservationReader = function(meta, recordType) {
         ]
         );
     }
-    GDP.SOSGetObservationReader.superclass.constructor.call(
+    CIDA.SOSGetObservationReader.superclass.constructor.call(
         this, meta, recordType
     );
 };
