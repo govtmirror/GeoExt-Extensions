@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.WPSExecuteResponseReader = function(meta, recordType) {
+CIDA.WPSExecuteResponseReader = function(meta, recordType) {
     meta = meta || {};
     if(!meta.format) {
         meta.format = new OpenLayers.Format.WPSExecute();
@@ -11,12 +11,12 @@ GDP.WPSExecuteResponseReader = function(meta, recordType) {
         ]
         );
     }
-    GDP.WPSExecuteResponseReader.superclass.constructor.call(
+    CIDA.WPSExecuteResponseReader.superclass.constructor.call(
         this, meta, recordType
     );
 };
 
-Ext.extend(GDP.WPSExecuteResponseReader, Ext.data.DataReader, {
+Ext.extend(CIDA.WPSExecuteResponseReader, Ext.data.DataReader, {
 
 
     /** api: config[attributionCls]

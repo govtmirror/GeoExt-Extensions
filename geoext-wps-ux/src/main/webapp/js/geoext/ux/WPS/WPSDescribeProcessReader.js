@@ -1,16 +1,16 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.WPSDescribeProcessReader = function(meta, recordType) {
+CIDA.WPSDescribeProcessReader = function(meta, recordType) {
     meta = meta || {};
     meta.format = meta.format || new OpenLayers.Format.WPSDescribeProcess();
     
     if(typeof recordType !== "function") {
         recordType = Ext.data.Record.create(meta.fields);
     }
-    GDP.WPSDescribeProcessReader.superclass.constructor.call(this, meta, recordType);
+    CIDA.WPSDescribeProcessReader.superclass.constructor.call(this, meta, recordType);
 };
 
-Ext.extend(GDP.WPSDescribeProcessReader, Ext.data.DataReader, {
+Ext.extend(CIDA.WPSDescribeProcessReader, Ext.data.DataReader, {
 
 
     /** api: config[attributionCls]

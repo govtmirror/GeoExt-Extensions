@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.WPSCapabilitiesStore = function(meta) {
+CIDA.WPSCapabilitiesStore = function(meta) {
     meta = meta || {};
     
     meta.format = new OpenLayers.Format.WPSCapabilities();
@@ -12,13 +12,13 @@ GDP.WPSCapabilitiesStore = function(meta) {
         {name: "serviceIdentification"}, // Object
         {name: "serviceProvider"}
     ]
-    GDP.WPSCapabilitiesStore.superclass.constructor.call(
+    CIDA.WPSCapabilitiesStore.superclass.constructor.call(
         this,
         Ext.apply(meta, {
             proxy: meta.proxy || (!meta.data ? new Ext.data.HttpProxy({url: meta.url, disableCaching: false, method: "GET"}) : undefined),
-            reader: new GDP.WPSCapabilitiesReader(meta)
+            reader: new CIDA.WPSCapabilitiesReader(meta)
         })
     );
 };
 
-Ext.extend(GDP.WPSCapabilitiesStore, Ext.data.Store);
+Ext.extend(CIDA.WPSCapabilitiesStore, Ext.data.Store);

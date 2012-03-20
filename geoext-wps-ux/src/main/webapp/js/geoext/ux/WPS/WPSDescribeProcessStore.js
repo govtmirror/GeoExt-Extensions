@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.WPSDescribeProcessStore = function(meta) {
+CIDA.WPSDescribeProcessStore = function(meta) {
     meta = meta || {};
     
     meta.format = new OpenLayers.Format.WPSDescribeProcess();
@@ -13,13 +13,13 @@ GDP.WPSDescribeProcessStore = function(meta) {
         {name: "dataInputs"}, // Array
         {name: "processOutputs"} // Array
     ]
-    GDP.WPSDescribeProcessStore.superclass.constructor.call(
+    CIDA.WPSDescribeProcessStore.superclass.constructor.call(
         this,
         Ext.apply(meta, {
             proxy: meta.proxy || (!meta.data ? new Ext.data.HttpProxy({url: meta.url, disableCaching: false, method: "GET"}) : new Ext.data.MemoryProxy(meta.data)),
-            reader: new GDP.WPSDescribeProcessReader(meta)
+            reader: new CIDA.WPSDescribeProcessReader(meta)
         })
     );
 };
 
-Ext.extend(GDP.WPSDescribeProcessStore, Ext.data.Store);
+Ext.extend(CIDA.WPSDescribeProcessStore, Ext.data.Store);
