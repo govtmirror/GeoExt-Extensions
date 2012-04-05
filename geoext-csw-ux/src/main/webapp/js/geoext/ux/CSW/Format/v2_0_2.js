@@ -519,6 +519,25 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                 obj.serviceType = {};
                 this.readChildNodes(node, obj.serviceType);
             },
+            "coupledResource": function(node, obj) {
+                obj.coupledResource = {};
+                this.readChildNodes(node, obj.coupledResource);
+            },
+            "SV_CoupledResource": function(node, obj) {
+                obj.svCoupledResource = {};
+                this.readChildNodes(node, obj.svCoupledResource);
+            },
+            "couplingType": function(node, obj) {
+                obj.couplingType = {};
+                this.readChildNodes(node, obj.couplingType);
+            },
+            "SV_CouplingType": function(node, obj) {
+                obj.svCouplingType = {};
+                var attrs = node.attributes;
+                for(var i=0, len=attrs.length; i<len; ++i) {
+                    obj[attrs[i].name] = attrs[i].nodeValue;
+                }
+            },
             "extent": function(node, obj) {
                 // if parent is DQ_Scope_Type, cardinality is 0..1 else if MD_DataIdentification_Type 0..infty
                 if (node.parentNode.localName == "MD_DataIdentification" || 
