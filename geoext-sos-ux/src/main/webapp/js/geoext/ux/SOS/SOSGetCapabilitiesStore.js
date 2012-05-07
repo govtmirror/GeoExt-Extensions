@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.SOSGetCapabilitiesStore = function(meta) {
+CIDA.SOSGetCapabilitiesStore = function(meta) {
     meta = meta || {};
     
     meta.format = new OpenLayers.Format.SOSCapabilities();
@@ -8,14 +8,14 @@ GDP.SOSGetCapabilitiesStore = function(meta) {
     meta.fields = [
             {name: "capabilities"} // root capabilities object
     ];
-    GDP.SOSGetCapabilitiesStore.superclass.constructor.call(
+    CIDA.SOSGetCapabilitiesStore.superclass.constructor.call(
         this,
         Ext.apply(meta, {
             proxy: meta.proxy || (!meta.data ? new Ext.data.HttpProxy({url: meta.url, disableCaching: false, method: "GET"}) : undefined),
             baseParams : meta.baseParams || { xmlData : meta.format.write(meta.opts) },
-            reader: new GDP.SOSGetCapabilitiesReader(meta)
+            reader: new CIDA.SOSGetCapabilitiesReader(meta)
         })
     );
 };
 
-Ext.extend(GDP.SOSGetCapabilitiesStore, Ext.data.Store);
+Ext.extend(CIDA.SOSGetCapabilitiesStore, Ext.data.Store);

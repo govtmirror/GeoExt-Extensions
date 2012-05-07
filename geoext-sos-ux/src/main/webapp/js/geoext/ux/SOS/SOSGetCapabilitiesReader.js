@@ -1,6 +1,6 @@
-Ext.ns("GDP");
+Ext.ns("CIDA");
 
-GDP.SOSGetCapabilitiesReader = function(meta, recordType) {
+CIDA.SOSGetCapabilitiesReader = function(meta, recordType) {
     meta = meta || {};
     if(!meta.format) {
         meta.format = new OpenLayers.Format.SOSCapabilities();
@@ -11,12 +11,12 @@ GDP.SOSGetCapabilitiesReader = function(meta, recordType) {
         ]
         );
     }
-    GDP.SOSGetCapabilitiesReader.superclass.constructor.call(
+    CIDA.SOSGetCapabilitiesReader.superclass.constructor.call(
         this, meta, recordType
     );
 };
 
-Ext.extend(GDP.SOSGetCapabilitiesReader, Ext.data.DataReader, {
+Ext.extend(CIDA.SOSGetCapabilitiesReader, Ext.data.DataReader, {
 
 
     /** api: config[attributionCls]
