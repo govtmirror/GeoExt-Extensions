@@ -30,6 +30,7 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
         om: "http://www.opengis.net/om/1.0",
         swe: "http://www.opengis.net/swe/1.0",
         sa: "http://www.opengis.net/sampling/1.0",
+        wml2: "http://www.opengis.net/waterml/2.0",
         xlink: "http://www.w3.org/1999/xlink",
         xsi: "http://www.w3.org/2001/XMLSchema-instance"
     },
@@ -86,7 +87,7 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
         if(data && data.nodeType == 9) {
             data = data.documentElement;
         }
-        var info = {measurements: [], observations: [], attributes: []};
+        var info = {};
         this.readNode(data, info);
         return info;
     },
@@ -123,6 +124,8 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
         "om": {
             "ObservationCollection": function(node, obj) {
                 obj.id = this.getAttributeNS(node, this.namespaces.gml, "id");
+                obj.measurements = [];
+                obj.observations = [];
                 this.readChildNodes(node, obj);
             },
             "member": function(node, observationCollection) {
@@ -264,6 +267,104 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
                 for (var i = 0, len = blocks.length;i < len;i++) {
                     values.push(blocks[i].split(dataArray.encoding.tokenSeparator));
                 }
+            }
+        },
+        "wml2": {
+            "Collection": function(node, obj) {
+                obj.id = this.getAttributeNS(node, this.namespaces.gml, "id");
+                this.readChildNodes(node, obj);
+            },
+            "metadata": function(node, obj) {
+                var metadata = obj.metadata = {};
+                this.readChildnodes(node, metadata);
+            },
+            "DocumentMetadata": function(node, obj) {
+                obj.id = this.getAttributeNS(node, this.namespaces.gml, "id");
+                this.readChildnodes(node, obj);
+            },
+            "generationDate": function(node, obj) {
+                obj.generationDate = this.getChildValue(node);
+                this.readChildnodes(node, obj);
+            },
+            "version": function(node, obj) {
+                obj.version = this.getAttributeNS(node, this.namespaces.xlink, "title");
+            },
+            "observationMember": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "ObservationMetadata": function(node, obj) {
+                // need to build in gmd/gco for some of these children
+                this.readChildnodes(node, obj);
+            },
+            "MonitoringPoint": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "descriptionReference": function(node, obj) {
+                obj.reference = this.getAttributeNS(node, this.namespaces.xlink, "href");
+                this.readChildnodes(node, obj);
+            },
+            "timeZone": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "TimeZone": function(node, obj) {
+                var tz = obj.timezone = {};
+                this.readChildnodes(node, tz);
+            },
+            "zoneOffset": function(node, obj) {
+                obj.offset = this.getChildValue(node);
+            },
+            "zoneAbbreviation": function(node, obj) {
+                obj.abbr = this.getChildValue(node);
+            },
+            "MeasurementTimeseries": function(node, obj) {
+                obj.measurements = [];
+                this.readChildnodes(node, obj);
+            },
+            "TimeSeriesMetadata": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "temporalExtent": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "defaultPointMetadata": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "DefaultTVPMeasurementMetadata": function(node, obj) {
+                var defaultMeta = {};
+                obj.metadata['default'] = defaultMeta;
+                this.readChildnodes(node, defaultMeta);
+            },
+            "qualifier": function(node, obj) {
+                obj.qualifier = this.getAttributeNS(node, this.namespaces.xlink, "title");
+            },
+            "uom": function(node, obj) {
+                obj.uom = node.getAttribute("code");
+            },
+            "interpolationType": function(node, obj) {
+                var interpolationType = {};
+                interpolationType.href = this.getAttributeNS(node, this.namespaces.xlink, "href");
+                interpolationType.title = this.getAttributeNS(node, this.namespaces.xlink, "title");
+                obj.interpolationType = interpolationType;
+            },
+            "point": function(node, obj) {
+                var point = {};
+                obj.measurements.push(point);
+                this.readChildnodes(node, point);
+            },
+            "MeasurementTVP": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "time": function(node, obj) {
+                obj.time = this.getChildValue(node);
+            },
+            "value": function(node, obj) {
+                obj.value = this.getChildValue(node);
+            },
+            "TVPMeasurementMetadata": function(node, obj) {
+                this.readChildnodes(node, obj);
+            },
+            "comment": function(node, obj) {
+                obj.comment = this.getChildValue(node);
             }
         }
     },
