@@ -28,6 +28,7 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
         sos: "http://www.opengis.net/sos/1.0",
         ogc: "http://www.opengis.net/ogc",
         om: "http://www.opengis.net/om/1.0",
+        om2: "http://www.opengis.net/om/2.0",
         swe: "http://www.opengis.net/swe/1.0",
         sa: "http://www.opengis.net/sampling/1.0",
         wml2: "http://www.opengis.net/waterml/2.0",
@@ -185,6 +186,18 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
                 }
             }
         },
+        "om2": OpenLayers.Util.applyDefaults({
+            "OM_Observation": function(node, obj) {
+                var observation = {
+                    attributes: {}
+                };
+                obj.observations.push(observation);
+                this.readChildNodes(node, observation);
+            },
+            "metadata": function(node, obj) {
+                this.readChildNodes(node, obj);
+            }
+        }, OpenLayers.Format.SOSGetObservation.prototype.readers.om),
         "sa": OpenLayers.Format.SOSGetFeatureOfInterest.prototype.readers.sa,
         "gml": OpenLayers.Util.applyDefaults({
             "TimeInstant": function(node, samplingTime) {
@@ -279,40 +292,41 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
                 this.readChildNodes(node, obj);
             },
             "metadata": function(node, obj) {
-                var metadata = obj.metadata = {};
-                this.readChildnodes(node, metadata);
+                var metadata = {};
+                obj.metadata = metadata;
+                this.readChildNodes(node, metadata);
             },
             "DocumentMetadata": function(node, obj) {
                 obj.id = this.getAttributeNS(node, this.namespaces.gml, "id");
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "generationDate": function(node, obj) {
                 obj.generationDate = this.getChildValue(node);
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "version": function(node, obj) {
                 obj.version = this.getAttributeNS(node, this.namespaces.xlink, "title");
             },
             "observationMember": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "ObservationMetadata": function(node, obj) {
                 // need to build in gmd/gco for some of these children
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "MonitoringPoint": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "descriptionReference": function(node, obj) {
                 obj.reference = this.getAttributeNS(node, this.namespaces.xlink, "href");
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "timeZone": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "TimeZone": function(node, obj) {
                 var tz = obj.timezone = {};
-                this.readChildnodes(node, tz);
+                this.readChildNodes(node, tz);
             },
             "zoneOffset": function(node, obj) {
                 obj.offset = this.getChildValue(node);
@@ -322,21 +336,21 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
             },
             "MeasurementTimeseries": function(node, obj) {
                 obj.measurements = [];
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "TimeSeriesMetadata": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "temporalExtent": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "defaultPointMetadata": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "DefaultTVPMeasurementMetadata": function(node, obj) {
                 var defaultMeta = {};
                 obj.metadata['default'] = defaultMeta;
-                this.readChildnodes(node, defaultMeta);
+                this.readChildNodes(node, defaultMeta);
             },
             "qualifier": function(node, obj) {
                 obj.qualifier = this.getAttributeNS(node, this.namespaces.xlink, "title");
@@ -353,10 +367,10 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
             "point": function(node, obj) {
                 var point = {};
                 obj.measurements.push(point);
-                this.readChildnodes(node, point);
+                this.readChildNodes(node, point);
             },
             "MeasurementTVP": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "time": function(node, obj) {
                 obj.time = this.getChildValue(node);
@@ -365,7 +379,7 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
                 obj.value = this.getChildValue(node);
             },
             "TVPMeasurementMetadata": function(node, obj) {
-                this.readChildnodes(node, obj);
+                this.readChildNodes(node, obj);
             },
             "comment": function(node, obj) {
                 obj.comment = this.getChildValue(node);

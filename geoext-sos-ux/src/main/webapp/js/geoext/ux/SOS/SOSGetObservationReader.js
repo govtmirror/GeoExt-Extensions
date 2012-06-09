@@ -58,12 +58,22 @@ Ext.extend(CIDA.SOSGetObservationReader, Ext.data.DataReader, {
      *  Create a data block containing Ext.data.Records from an XML document.
      */
     readRecords: function(data) {
-        if(typeof data === "string" || data.nodeType) {
+        if (typeof data === "string" || data.nodeType) {
             data = this.meta.format.read(data);
         }
 
         var records = [];
-        if (data.observations) {
+        if (data.metadata && data.metadata.version === "WaterML 2.0") {
+            var result = data.observations[0].result;
+            var uom = result.metadata['default'].uom;
+            var values = {};
+            values.name = "observed";
+            values.dataRecord = [];
+            values.dataRecord.push({ "name" : "Discharge", "uom" : uom });
+            values.values = result.measurements;
+
+            records.push(new this.recordType(values));
+        } else if (data.observations) {
             Ext.iterate(data.observations, function (item) {
                 var values = {};
                 values.name = item.attributes.name;
@@ -74,15 +84,6 @@ Ext.extend(CIDA.SOSGetObservationReader, Ext.data.DataReader, {
 
                 records.push(new this.recordType(values));
             }, this);
-        } else if (data.metadata.version) {
-            // data.metadata.version is WaterML 2.0
-            var uom = data.metadata['default'].uom;
-            var values = {};
-            values.name = "observed";
-            values.datarecord = { "uom" : uom };
-            values.values = data.measurements;
-
-            records.push(new this.recordType(values));
         }
 
         return {
