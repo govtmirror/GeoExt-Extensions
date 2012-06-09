@@ -126,6 +126,7 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
                 obj.id = this.getAttributeNS(node, this.namespaces.gml, "id");
                 obj.measurements = [];
                 obj.observations = [];
+                obj.attributes = [];
                 this.readChildNodes(node, obj);
             },
             "member": function(node, observationCollection) {
@@ -272,6 +273,9 @@ OpenLayers.Format.SOSGetObservation = OpenLayers.Class(OpenLayers.Format.XML, {
         "wml2": {
             "Collection": function(node, obj) {
                 obj.id = this.getAttributeNS(node, this.namespaces.gml, "id");
+                obj.observations = [];
+                obj.measurements = [];
+                obj.attributes = [];
                 this.readChildNodes(node, obj);
             },
             "metadata": function(node, obj) {
