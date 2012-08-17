@@ -38,8 +38,8 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
         srv: "http://www.isotc211.org/2005/srv",
         gml: "http://www.opengis.net/gml",
         ogc: "http://www.opengis.net/ogc",
-        ows: "http://www.opengis.net/ows"
-
+        ows: "http://www.opengis.net/ows",
+        gmi: "http://www.isotc211.org/2005/gmi"
     },
     
     /**
@@ -269,6 +269,13 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                 var gninfo = {};
                 this.readChildNodes(node, gninfo);
                 obj.gninfo = gninfo;
+            }
+        },
+        "gmi": {
+            "MI_Metadata": function(node, obj) {
+                var record = {type: "MI_Metadata"};
+                this.readChildNodes(node, record);
+                obj.records.push(record);
             }
         },
         "gmd": {
