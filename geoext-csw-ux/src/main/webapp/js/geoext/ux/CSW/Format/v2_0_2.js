@@ -258,6 +258,18 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                             }
                         },
                         "gco": {
+                            "aName" : function(node, obj) {
+                                obj.aName = {};
+                                this.readChildNodes(node, obj.aName);
+                            },
+                            "attributeType" : function(node, obj) {
+                                obj.attributeType = {};
+                                this.readChildNodes(node, obj.attributeType);
+                            },
+                            "TypeName" : function(node, obj) {
+                                obj.typeName = {};
+                                this.readChildNodes(node, obj.typeName);
+                            },
                             "Measure": function(node, obj) {
                                 obj.Measure = {
                                     value: this.getChildValue(node)
@@ -371,7 +383,6 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                                 "MD_DigitalTransferOptions": null,
                                 "MD_Format": null,
                                 "MD_Medium": null,
-                                "MD_ReferenceSystem": null,
                                 "RS_Identifier": null,
                                 "CI_Citation": null,
                                 "CI_Date": null,
@@ -494,7 +505,7 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                                 "unitsOfDistribution":null,
                                 "transferSize":null,
                                 "offLine":null,
-                                "name":null,
+//                                "name":null,
                                 "version":null,
                                 "amendmentNumber":null,
                                 "specification":null,
@@ -538,6 +549,19 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                                 }
                 
                                 this.readChildNodes(node, obj.serviceIdentification);
+                            },
+                            "parameters": function(node, obj) {
+                                if (!obj.parameter) obj.parameter = [];
+                                var parameter = this.readChildNodes(node);
+                                obj.parameter.push(parameter);
+                            },
+                            "SV_Parameter": function(node, obj) {
+                                obj.svParameter= {};
+                                this.readChildNodes(node, obj.svParameter);
+                            },
+                            "name": function(node, obj) {
+                                obj.name = {};
+                                this.readChildNodes(node, obj.name);
                             },
                             "serviceType": function(node, obj) {
                                 obj.serviceType = {};
