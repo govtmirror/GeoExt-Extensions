@@ -332,6 +332,10 @@ OpenLayers.Format.CSWGetRecords.v2_0_2 = OpenLayers.Class(OpenLayers.Format.XML,
                                     obj.extent = this.readChildNodes(node);
                                 }
                             },
+                            "name" : function(node, obj) {
+                                obj.name = {};
+                                this.readChildNodes(node, obj.name);
+                            },
                             "*": function(node, obj) {
                                 var name = node.localName || node.nodeName.split(":").pop();
                                 if (name in this.readers.gmd._createOneChild) {
