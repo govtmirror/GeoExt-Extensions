@@ -7,7 +7,6 @@
     <version>1.1-6-SNAPSHOT</version>
 
     <modules>
-        <module>geoext</module>
         <!-- put extensions / modifications here -->
         <module>geoext-wps-ux</module>
         <module>geoext-sos-ux</module>
