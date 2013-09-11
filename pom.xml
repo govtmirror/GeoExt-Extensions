@@ -1,35 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>gov.usgs.cida.jslibs</groupId>
-    <artifactId>geoext-parent</artifactId>
-    <packaging>pom</packaging>
-    <version>1.1-9-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gov.usgs.cida.jslibs</groupId>
+	<artifactId>geoext-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.1-9-SNAPSHOT</version>
 
-    <modules>
-        <!-- put extensions / modifications here -->
-        <module>geoext-wps-ux</module>
-        <module>geoext-sos-ux</module>
-        <module>geoext-csw-ux</module>
-    </modules>
+	<modules>
+		<!-- put extensions / modifications here -->
+		<module>geoext-wps-ux</module>
+		<module>geoext-sos-ux</module>
+		<module>geoext-csw-ux</module>
+	</modules>
 
-    <name>GeoExt Parent</name>
-    <url>http://geoext.org</url>
-        
-    <distributionManagement>
-        <repository>
-            <id>cida-releases</id>
-            <name>CIDA Releases</name>
-            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-public-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>cida-snapshots</id>
-            <name>CIDA Snapshots</name>
-            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-public-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-    <scm>
-        <connection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/js_lib/maven/geoext-parent/trunk</connection>
-        <developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/js_lib/maven/geoext-parent/trunk</developerConnection>
-    </scm>
+	<name>GeoExt Parent</name>
+	<url>http://cida.usgs.gov</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Center for Integrated Data Analytics</name>
+		<url>http://cida.usgs.gov</url>
+	</organization>    
+	<developers>
+		<developer>
+			<name>Jordan Walker</name>
+			<email>jiwalker@usgs.gov</email>
+			<id>jiwalker</id>
+			<organization>Center for Integrated Data Analytics</organization>
+			<organizationUrl>http://cida.usgs.gov</organizationUrl>
+			<timezone>-6</timezone>
+		</developer>
+		<developer>
+			<name>Ivan Suftin</name>
+			<email>isuftin@usgs.gov</email>
+			<id>isuftin</id>
+			<organization>Center for Integrated Data Analytics</organization>
+			<organizationUrl>http://cida.usgs.gov</organizationUrl>
+			<timezone>-6</timezone>
+		</developer>
+		<developer>
+			<name>David Sibley</name>
+			<email>dmsibley@usgs.gov</email>
+			<id>dmsibley</id>
+			<organization>Center for Integrated Data Analytics</organization>
+			<organizationUrl>http://cida.usgs.gov</organizationUrl>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://igsarm-cida-hudson1.er.usgs.gov:8080/hudson/job/GeoExt/</url>
+	</ciManagement>
+	<distributionManagement>
+		<repository>
+			<id>cida-releases</id>
+			<name>CIDA Releases</name>
+			<url>http://internal.cida.usgs.gov/maven/content/repositories/cida-public-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>cida-snapshots</id>
+			<name>CIDA Snapshots</name>
+			<url>http://internal.cida.usgs.gov/maven/content/repositories/cida-public-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>cida-public</id>
+			<name>CIDA Public Nexus</name>
+			<url>https://cida.usgs.gov/maven/cida-public</url>
+		</repository>
+	</repositories>
+	<scm>
+		<url>https://github.com/USGS-CIDA/GeoExt-Extensions</url>
+		<connection>scm:git:git@github.com:USGS-CIDA/GeoExt-Extensions.git</connection>
+		<developerConnection>scm:git:git@github.com:USGS-CIDA/GeoExt-Extensions.git</developerConnection>
+	</scm>
 </project>
