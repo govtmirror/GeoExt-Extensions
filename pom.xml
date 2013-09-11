@@ -4,7 +4,7 @@
 	<groupId>gov.usgs.cida.jslibs</groupId>
 	<artifactId>geoext-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1-9-SNAPSHOT</version>
+	<version>1.1-9</version>
 
 	<modules>
 		<!-- put extensions / modifications here -->
