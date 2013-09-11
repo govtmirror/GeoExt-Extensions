@@ -4,7 +4,7 @@
     <groupId>gov.usgs.cida.jslibs</groupId>
     <artifactId>geoext-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1-6-SNAPSHOT</version>
+    <version>1.1-9-SNAPSHOT</version>
 
     <modules>
         <!-- put extensions / modifications here -->
@@ -20,12 +20,12 @@
         <repository>
             <id>cida-releases</id>
             <name>CIDA Releases</name>
-            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-releases/</url>
+            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-public-releases/</url>
         </repository>
         <snapshotRepository>
             <id>cida-snapshots</id>
             <name>CIDA Snapshots</name>
-            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-snapshots/</url>
+            <url>http://internal.cida.usgs.gov/maven/content/repositories/cida-public-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <scm>
